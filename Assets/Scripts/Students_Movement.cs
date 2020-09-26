@@ -7,7 +7,7 @@ public class Students_Movement : MonoBehaviour
 {
     Rigidbody2D rb;
 
-    [SerializeField] Transform[] waypoints;
+    [SerializeField] Transform waypoint;
     int waypointIndex = 0;
 
     [Range(0f, 10f)] [SerializeField] float moveSpeed = 2f;
@@ -51,43 +51,37 @@ public class Students_Movement : MonoBehaviour
     void Spawn()
     {
         currentState = studentStates.Moving;
-        transform.position = waypoints[waypointIndex].transform.position;
-
+        transform.position = waypoint.transform.position;
     }
 
     void Move()
     {
-        rb.velocity = new Vector2(waypoints[waypointIndex].transform.position.x - transform.position.x, waypoints[waypointIndex].transform.position.y - transform.position.y).normalized * moveSpeed;
-
-        transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(waypoints[waypointIndex].transform.position.y - transform.position.y, waypoints[waypointIndex].transform.position.x - transform.position.x) * Mathf.Rad2Deg - 90);
-
-
-
-        if ((waypoints[waypointIndex].transform.position - transform.position).magnitude <= 0.1f)
+        rb.velocity = new Vector2(waypoint.position.x - transform.position.x, waypoint.position.y - transform.position.y).normalized * moveSpeed;
+        transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(waypoint.position.y - transform.position.y, waypoint.position.x - transform.position.x) * Mathf.Rad2Deg - 90);
+        if ((waypoint.position - transform.position).magnitude <= 0.1f)
         {
             waypointIndex += 1;
-        }
-
-        if (waypointIndex == waypoints.Length)
-        {
-            rb.velocity = Vector2.zero;
-            currentState = studentStates.Stopped;
+            SetNextWaypoint();
         }
     }
 
     void SetNextWaypoint()
     {
+        waypoint.position = transform.position;
+        waypoint.rotation = Quaternion.identity;
+
         float randomAngle = Random.Range(0f, wpMaxAngle) - wpMaxAngle / 2;
-        Vector3 rotation = new Vector3(Vector3.forward.x, Vector3.forward.y, Vector3.forward.z + randomAngle);
+        Vector3 rotation = new Vector3(Vector3.forward.x, Vector3.forward.y, Vector3.forward.z + randomAngle * Mathf.Deg2Rad);
         RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.TransformDirection(rotation), wpMaxDistance, 10);
-        float size = transform.GetComponent<SpriteRenderer>().size.x;
-        Debug.Log(hit.distance);
-        float randomDistance = Random.Range(0, hit.distance) - size;
-
+        float distance = hit.distance;
+        if (hit.distance <= 0)
+            distance = wpMaxDistance;
+        //float size = transform.GetComponentInChildren<SpriteRenderer>().size.x;
+        float randomDistance = Random.Range(0f, distance);
         Vector2 nextWaypoint = rotation * randomDistance;
-        Debug.Log(nextWaypoint);
-        SetNextWaypoint();
+        Debug.Log("distance : " + distance + " rotation : " + rotation + " Position : " + nextWaypoint);
+
+        waypoint.rotation = Quaternion.Euler(rotation * Mathf.Rad2Deg);
+        waypoint.Translate(Vector2.up * distance, Space.Self);
     }
-
-
 }
