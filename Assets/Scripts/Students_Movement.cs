@@ -25,6 +25,7 @@ public class Students_Movement : MonoBehaviour
     void Start()
     {
         Spawn();
+        SetNextWaypoint();
     }
 
     private void Update()
@@ -77,9 +78,15 @@ public class Students_Movement : MonoBehaviour
     void SetNextWaypoint()
     {
         float randomAngle = Random.Range(0f, wpMaxAngle) - wpMaxAngle / 2;
-        LayerMask layer;
-        RaycastHit2D hit;
-        Physics2D.Raycast(transform.position, transform.TransformDirection(Vector3.forward), wpMaxDistance, layer);
+        Vector3 rotation = new Vector3(Vector3.forward.x, Vector3.forward.y, Vector3.forward.z + randomAngle);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.TransformDirection(rotation), wpMaxDistance, 10);
+        float size = transform.GetComponent<SpriteRenderer>().size.x;
+        Debug.Log(hit.distance);
+        float randomDistance = Random.Range(0, hit.distance) - size;
+
+        Vector2 nextWaypoint = rotation * randomDistance;
+        Debug.Log(nextWaypoint);
+        SetNextWaypoint();
     }
 
 
