@@ -29,11 +29,16 @@ public class Students_Movement : MonoBehaviour
 
     private void Update()
     {
+        /*
         Vector2 leftVector = new Vector2(Mathf.Cos(-wpMaxAngle * Mathf.Deg2Rad / 2 + 90 * Mathf.Deg2Rad), Mathf.Sin(-wpMaxAngle * Mathf.Deg2Rad / 2 + 90 * Mathf.Deg2Rad)) * wpMaxDistance;
         Vector2 rightVector = new Vector2(Mathf.Cos(wpMaxAngle * Mathf.Deg2Rad / 2 + 90 * Mathf.Deg2Rad), Mathf.Sin(wpMaxAngle * Mathf.Deg2Rad / 2 + 90 * Mathf.Deg2Rad)) * wpMaxDistance;
         Debug.DrawRay(this.transform.position, leftVector, Color.black); //Left
         Debug.DrawRay(this.transform.position, transform.rotation.eulerAngles * wpMaxDistance, Color.black); //middle
         Debug.DrawRay(this.transform.position, rightVector, Color.black); //Right
+        */
+
+
+
     }
 
     void FixedUpdate()
@@ -67,6 +72,14 @@ public class Students_Movement : MonoBehaviour
             rb.velocity = Vector2.zero;
             currentState = studentStates.Stopped;
         }
+    }
+
+    void SetNextWaypoint()
+    {
+        float randomAngle = Random.Range(0f, wpMaxAngle) - wpMaxAngle / 2;
+        LayerMask layer;
+        RaycastHit2D hit;
+        Physics2D.Raycast(transform.position, transform.TransformDirection(Vector3.forward), wpMaxDistance, layer);
     }
 
 
