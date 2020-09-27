@@ -8,4 +8,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Scenes/ARH_TestScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/_Scenes/BAD_SplashScreen.unity
+    guid: 0a0b3e44e0534d44cb37bff232e94b95
+  - enabled: 1
+    path: Assets/_Scenes/BAD_TestScene.unity
+    guid: c21bf86039695cd4b91391d4a09026a9
+  - enabled: 1
+    path: Assets/_Scenes/BAD_Credits.unity
+    guid: f982ed3f2c3cc4e4d8f72b3e4f70cbf6
   m_configObjects: {}
