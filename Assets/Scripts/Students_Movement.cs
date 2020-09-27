@@ -48,7 +48,7 @@ public class Students_Movement : MonoBehaviour
     void Move()
     {
         rb.velocity = new Vector2(waypoint.position.x - transform.position.x, waypoint.position.y - transform.position.y).normalized * moveSpeed;
-        if ((waypoint.position - transform.position).magnitude <= 0.1f)
+        if ((waypoint.position - transform.position).magnitude <= 0.2f)
         {
             SetNextWaypoint();
         }
@@ -61,8 +61,9 @@ public class Students_Movement : MonoBehaviour
 
         float randomAngle = Random.Range(0f, wpMaxAngle) - wpMaxAngle / 2;
         Vector3 rotation = new Vector3(0, 0, transform.rotation.z + randomAngle * Mathf.Deg2Rad);
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.TransformDirection(rotation), wpMaxDistance, 10);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.TransformDirection(rotation), wpMaxDistance);
         float distance = hit.distance;
+        Debug.Log(distance);
         if (hit.distance <= 0)
             distance = wpMaxDistance;
         //float size = transform.GetComponentInChildren<SpriteRenderer>().size.x;

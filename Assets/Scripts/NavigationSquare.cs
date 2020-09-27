@@ -8,7 +8,7 @@ public class NavigationSquare : MonoBehaviour
 
     public Vector2 GetRandomPos()
     {
-        Vector2 size = GetComponent<SpriteRenderer>().size;
+        Vector2 size = GetComponent<BoxCollider2D>().bounds.size;
         float minX = transform.position.x - size.x / 2;
         float maxX = transform.position.x + size.x / 2;
         float minY = transform.position.y - size.y / 2;
