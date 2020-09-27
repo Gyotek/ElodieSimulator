@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using UnityEditorInternal;
 
 public class Students_Movement : MonoBehaviour
 {
@@ -9,8 +10,7 @@ public class Students_Movement : MonoBehaviour
 
     [SerializeField] Transform waypoint;
     [SerializeField] Transform spawnpoint;
-    [SerializeField] Transform targetpoint;
-    int waypointIndex = 0;
+    public Transform targetpoint;
 
     [Range(0f, 10f)] [SerializeField] float moveSpeed = 2f;
     [Range(0.1f, 2.5f)] [SerializeField] float wpMaxDistance = 0.5f;
@@ -19,6 +19,10 @@ public class Students_Movement : MonoBehaviour
     public enum studentStates { Stopped, Moving}
     studentStates currentState = studentStates.Stopped;
 
+    public void ChangeTarget(Vector2 pos)
+    {
+        targetpoint.position = pos;
+    }
 
     private void Awake()
     {
@@ -40,8 +44,8 @@ public class Students_Movement : MonoBehaviour
     void Spawn()
     {
         currentState = studentStates.Moving;
-        transform.position = spawnpoint.transform.position;
-        transform.rotation = spawnpoint.transform.rotation;
+        //transform.position = spawnpoint.transform.position;
+        //transform.rotation = spawnpoint.transform.rotation;
         SetNextWaypoint();
     }
 

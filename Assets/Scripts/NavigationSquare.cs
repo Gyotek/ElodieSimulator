@@ -9,10 +9,10 @@ public class NavigationSquare : MonoBehaviour
     public Vector2 GetRandomPos()
     {
         Vector2 size = GetComponent<BoxCollider2D>().bounds.size;
-        float minX = transform.position.x - size.x / 2;
-        float maxX = transform.position.x + size.x / 2;
-        float minY = transform.position.y - size.y / 2;
-        float maxY = transform.position.y + size.y / 2;
+        float minX = transform.position.x - size.x / 2 * transform.localScale.x;
+        float maxX = transform.position.x + size.x / 2 * transform.localScale.x;
+        float minY = transform.position.y - size.y / 2 * transform.localScale.y;
+        float maxY = transform.position.y + size.y / 2 * transform.localScale.y;
 
         float randomX = Random.Range(minX, maxX);
         float randomY = Random.Range(minY, maxY);
