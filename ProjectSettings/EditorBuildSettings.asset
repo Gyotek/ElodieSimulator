@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Scenes/BAD_TestScene.unity
     guid: c21bf86039695cd4b91391d4a09026a9
+  - enabled: 1
+    path: Assets/_Scenes/BAD_Credits.unity
+    guid: f982ed3f2c3cc4e4d8f72b3e4f70cbf6
   m_configObjects: {}

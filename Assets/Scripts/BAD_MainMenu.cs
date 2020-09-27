@@ -7,8 +7,13 @@ public class BAD_MainMenu : MonoBehaviour
 {
     public void PlayGame ()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene(2);
 
+    }
+
+    public void PlayCredits()
+    {
+        SceneManager.LoadScene(3);
     }
 
     public void QuitGame ()
@@ -16,5 +21,13 @@ public class BAD_MainMenu : MonoBehaviour
         Debug.Log("Quit");
         Application.Quit();
     }
+
+    public void Restart ()
+    {
+        SceneManager.LoadScene(2);
+
+    }
+
+
     
 }

@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class BAD_Controller : MonoBehaviour
 {
@@ -19,7 +21,12 @@ public class BAD_Controller : MonoBehaviour
     private int MaxSign = 4;
     private int TotalSign;
 
+    [SerializeField]
+    public GameObject MenuPause;
 
+    public bool stopTimePause = false;
+
+    public GameObject TriggerSifflet;
     void Start()
     {
 
@@ -30,7 +37,55 @@ public class BAD_Controller : MonoBehaviour
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
 
-        if (Input.GetKeyDown(KeyCode.E)) 
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            transform.rotation = Quaternion.Euler(0, 0, -90);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            transform.rotation = Quaternion.Euler(0, 0, 90);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            transform.rotation = Quaternion.Euler(0, 0, 180);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (MenuPause.activeSelf)
+            {
+                MenuPause.SetActive(false);
+                stopTimePause = false;
+            }
+            else
+            {
+                MenuPause.SetActive(true);
+                stopTimePause = true;
+            }
+
+        }
+
+        if (stopTimePause == true)
+        {
+            Time.timeScale = 0;
+        }
+
+        if (stopTimePause == false)
+        {
+            Time.timeScale = 1;
+
+        }
+
+
+
+        if (Input.GetKeyDown(KeyCode.E) ) 
         {
 
             if (closeToSign)
@@ -54,6 +109,7 @@ public class BAD_Controller : MonoBehaviour
                 Destroy(CloseSign);
                 TotalSign--;
             }
+
             else if (MaxSign > TotalSign)
             {
                 SetSign(BAD_Sign.SignTypes.Red);
@@ -109,7 +165,28 @@ public class BAD_Controller : MonoBehaviour
 
     }
 
+    public void Resume()
+    {
+        MenuPause.SetActive(false);
+            stopTimePause = false;
+            Time.timeScale = 1;
+    }
 
+    public void Quit()
+    {
+        print("Hello");
+        SceneManager.LoadScene(1);
 
+    }
 
+    void Sifflet()
+    {
+        StartCoroutine("SiffletCoroutine");
+    }
+    IEnumerator SiffletCoroutine()
+    {
+        TriggerSifflet.SetActive(false);
+        yield return new WaitForSeconds(0.1f);
+        TriggerSifflet.SetActive(false);
+    }
 }
